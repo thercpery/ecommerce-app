@@ -11,11 +11,20 @@ const AppNavbar = () => {
                 <Navbar.Brand as={Link} to="/">NO BUDGET GADGET</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
-                        <Nav.Link as={NavLink} to="/shop" exact>Gadgets</Nav.Link>
-                    </Nav>
                     {
-                        user.id !== null
+                        (user.id !== null || user.isAdmin)
+                        ?
+                        <Nav className="me-auto">
+                            <Nav.Link as={NavLink} to="/admin/dashboard" exact>Dashboard</Nav.Link>
+                            <Nav.Link as={NavLink} to="/admin/orders" exact>All Orders</Nav.Link>
+                        </Nav>
+                        :
+                        <Nav className="me-auto">
+                            <Nav.Link as={NavLink} to="/shop" exact>Shop</Nav.Link>
+                        </Nav>
+                    }
+                    {
+                        ((user.id !== null) || (localStorage.getItem("token") !== null))
                         ?
                             <Nav>
                                 <Nav.Link as={NavLink} to="/logout">Log Out</Nav.Link>

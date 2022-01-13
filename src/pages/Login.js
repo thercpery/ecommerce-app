@@ -4,8 +4,7 @@ import { Container, Card, Button, Form } from "react-bootstrap";
 import Swal from "sweetalert2";
 import UserContext from "../UserContext";
 
-const Login = (props) => {
-    // TODO: Add authentication
+const Login = () => {
     const {user, setUser} = useContext(UserContext);
 
     const [email, setEmail] = useState("");
@@ -27,7 +26,6 @@ const Login = (props) => {
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data.accessToken);
             if(typeof data.accessToken !== "undefined"){
                 localStorage.setItem("token", data.accessToken);
                 retrieveUserDetails(data.accessToken);
@@ -36,7 +34,7 @@ const Login = (props) => {
                     icon: "success",
                     text: "You can now shop online"
                 });
-
+                // TODO: If admin, redirect to admin page
             }
             else{
                 Swal.fire({
@@ -73,9 +71,13 @@ const Login = (props) => {
     }, [email, password]);
 
     return (
-        (user.id !== null)
+        ((user.id !== null) || (localStorage.getItem("token") !== null))
         ?
-        <Redirect to="/shop" />
+            (user.isAdmin)
+            ?
+            <Redirect to="/admin/dashboard"/>
+            :
+            <Redirect to="/shop" />
         :
 
         <Container>

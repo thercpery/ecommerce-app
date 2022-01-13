@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
-import { Link, useHistory } from 'react-router-dom';
+import { useState, useEffect, useContext } from "react";
+import { Link, useHistory, Redirect } from 'react-router-dom';
 import { Container, Card, Button, Form } from "react-bootstrap";
 import Swal from "sweetalert2";
+import UserContext from "../UserContext";
 
 const Signup = () => {
-    // TODO: Add user
+    const { user } = useContext(UserContext);
     const history = useHistory();
     const [email, setEmail] = useState("");
     const [password1, setPassword1] = useState("");
@@ -65,6 +66,10 @@ const Signup = () => {
     }, [email, password1, password2]);
 
     return (
+        ((user.id !== null) || (localStorage.getItem("token") !== null))
+        ?
+        <Redirect to="/shop" />
+        :
         <Container>
             <div className="d-flex justify-content-center mt-5">
                 <Card className="text-center center-block cardForm">

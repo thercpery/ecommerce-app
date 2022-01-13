@@ -31,7 +31,7 @@
   width: 30rem;
 }
 
-.ctaBtn, .submitBtn {
+.ctaBtn, .submitBtn, .productBtn, .cartBtn{
   background-color: #001F54!important;
   border:none !important;
 }
