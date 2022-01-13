@@ -1,38 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap");
+
+*{
+  font-family: "Source Code Pro", monospace;
+}
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.appNavbar{
+  background-color: #0A1128;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+img{
+  min-height:100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.cardForm{
+  width: 30rem;
 }
 
-.App-link {
-  color: #61dafb;
+.ctaBtn, .submitBtn {
+  background-color: #001F54!important;
+  border:none !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.cardHeader{
+  background-color: #001F54!important;
+  color: #FEFCFB!important;
 }
+
