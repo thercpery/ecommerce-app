@@ -4,19 +4,19 @@ import { Link } from "react-router-dom";
 const AppCarouselPage = () => {
     return (
         <Carousel>
-            <Carousel.Item>
+            <Carousel.Item className="frontPageItem">
                 <img
                 className="d-block w-100"
                 src="img/carousel-1.jpg"
                 alt="First slide"
                 />
                 <Carousel.Caption>
-                <h3>NO BUDGET FOR COMPUTERS?</h3>
-                <p>Shop now here for reasonable prices.</p>
-                <Button className="ctaBtn" as={Link} to="/shop">SHOP NOW</Button>
+                <h1 className="mb-5">NO BUDGET FOR COMPUTERS?</h1>
+                <h4 className="mb-5">Shop now here for reasonable prices.</h4>
+                <Button className="ctaBtn mb-5" as={Link} to="/shop">SHOP NOW</Button>
                 </Carousel.Caption>
             </Carousel.Item>
-            <Carousel.Item>
+            <Carousel.Item className="frontPageItem">
                 <img
                 className="d-block w-100"
                 src="img/carousel-2.jpg"
@@ -24,12 +24,12 @@ const AppCarouselPage = () => {
                 />
 
                 <Carousel.Caption>
-                <h3>NO BUDGET FOR GADGETS?</h3>
-                <p>All of our second-hand items are of high-quality, just as like you have bought it brand new.</p>
-                <Button className="ctaBtn" as={Link} to="/shop">SHOP NOW</Button>
+                <h1 className="mb-5">NO BUDGET FOR GADGETS?</h1>
+                <h4 className="mb-5">All of our second-hand items are of high-quality, just as like you have bought it brand new.</h4>
+                <Button className="ctaBtn mb-5" as={Link} to="/shop">SHOP NOW</Button>
                 </Carousel.Caption>
             </Carousel.Item>
-            <Carousel.Item>
+            <Carousel.Item className="frontPageItem">
                 <img
                 className="d-block w-100"
                 src="img/carousel-3.jpg"
@@ -37,9 +37,9 @@ const AppCarouselPage = () => {
                 />
 
                 <Carousel.Caption>
-                <h3>GUARANTEE?</h3>
-                <p>Don't worry, we have warranty here.</p>
-                <Button className="ctaBtn" as={Link} to="/shop">SHOP NOW</Button>
+                <h1 className="mb-5">GUARANTEE?</h1>
+                <h4 className="mb-5">Don't worry, we have warranty here.</h4>
+                <Button className="ctaBtn mb-5" as={Link} to="/shop">SHOP NOW</Button>
                 </Carousel.Caption>
             </Carousel.Item>
         </Carousel>

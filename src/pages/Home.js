@@ -3,9 +3,11 @@ import AppFrontPage from "../components/AppFrontPage";
 
 const Home = () => {
     return (
-        <Fragment>
-            <AppFrontPage />
-        </Fragment>
+        <div className="frontPage">
+            <Fragment>
+                <AppFrontPage />
+            </Fragment>
+        </div>
     )
 }
 
