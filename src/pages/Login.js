@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from "react";
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { Container, Card, Button, Form } from "react-bootstrap";
 import Swal from "sweetalert2";
 import UserContext from "../UserContext";
 
 const Login = () => {
     const {user, setUser} = useContext(UserContext);
-
+    const history = useHistory();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isActive, setIsActive] = useState(false);
@@ -32,15 +32,20 @@ const Login = () => {
                 Swal.fire({
                     title: "Login Successful!",
                     icon: "success",
-                    text: "You can now shop online"
+                    text: "You can now shop online."
                 });
-                // TODO: If admin, redirect to admin page
+                if(user.isAdmin){
+                    history.push("/admin");
+                }
+                else{
+                    history.push("/shop");
+                }
             }
             else{
                 Swal.fire({
                     title: "Wrong Email Or Password!",
                     icon: "error",
-                    text: "Please enter your correct email or password",
+                    text: "Please enter your correct email or password.",
                 })
             }
         });
@@ -75,7 +80,7 @@ const Login = () => {
         ?
             (user.isAdmin)
             ?
-            <Redirect to="/admin/dashboard"/>
+            <Redirect to="/admin"/>
             :
             <Redirect to="/shop" />
         :
@@ -88,7 +93,7 @@ const Login = () => {
                     </Card.Header>
                     <Card.Body>
                         <Form onSubmit={(e) => loginUser(e)}>          
-                            <Form.Group className="mb-3">
+                            <Form.Group className="mb-3" controlId="userEmail">
                                 <Form.Label>Email</Form.Label>
                                 <Form.Control 
                                     type="email" 
@@ -98,7 +103,7 @@ const Login = () => {
                                     required>
                                 </Form.Control>
                             </Form.Group>
-                            <Form.Group className="mb-3">
+                            <Form.Group className="mb-3" controlId="password">
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control 
                                     type="password" 

@@ -9,7 +9,9 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 import Signup from "./pages/Signup";
+import ChangePassword from "./pages/ChangePassword";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminOrders from "./pages/AdminOrders";
 import Shop from "./pages/Shop";
 import Error from "./pages/Error";
 // UserProvider
@@ -25,22 +27,22 @@ function App() {
 
   const unsetUser = () => localStorage.clear();
 
-  // useEffect(() => {
-  //   if(localStorage.getItem("token") !== null){
-  //     fetch("https://ancient-temple-55465.herokuapp.com/api/users/details", {
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem("token")}`
-  //       }
-  //     })
-  //     .then(res => res.json())
-  //     .then(data => {
-  //         setUser({
-  //             id: data._id,
-  //             isAdmin: data.isAdmin
-  //         });
-  //     });
-  //   }
-  // });
+  useEffect(() => {
+    if(localStorage.getItem("token") !== null){
+      fetch("https://ancient-temple-55465.herokuapp.com/api/users/details", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+          setUser({
+              id: data._id,
+              isAdmin: data.isAdmin
+          });
+      });
+    }
+  }, []);
 
 
   return (
@@ -52,8 +54,10 @@ function App() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/logout" component={Logout} />
           <Route exact path="/signup" component={Signup} />
+          <Route exact path="/changepassword" component={ChangePassword} />
           <Route exact path="/shop" component={Shop} />
-          <Route exact path="/admin/dashboard" component={AdminDashboard} />
+          <Route exact path="/admin" component={AdminDashboard} />
+          <Route exact path="/admin/orders" component={AdminOrders} />
           <Route exact path="/product/:productId" component={Product} />
           <Route component={Error} />
         </Switch>

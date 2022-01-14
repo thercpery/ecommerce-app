@@ -68,7 +68,11 @@ const Signup = () => {
     return (
         ((user.id !== null) || (localStorage.getItem("token") !== null))
         ?
-        <Redirect to="/shop" />
+            (user.isAdmin)
+            ?
+            <Redirect to="/admin" />
+            :
+            <Redirect to="/shop" />
         :
         <Container>
             <div className="d-flex justify-content-center mt-5">
@@ -78,7 +82,7 @@ const Signup = () => {
                     </Card.Header>
                     <Card.Body>
                         <Form onSubmit={(e) => registerUser(e)}>
-                            <Form.Group className="mb-3">
+                            <Form.Group className="mb-3" controlId="userEmail">
                                 <Form.Label>Email</Form.Label>
                                 <Form.Control 
                                     type="email" 
@@ -91,7 +95,7 @@ const Signup = () => {
                                     We'll never share your email with anyone else.
                                 </Form.Text>
                             </Form.Group>
-                            <Form.Group className="mb-3">
+                            <Form.Group className="mb-3" controlId="password1">
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control 
                                     type="password" 
@@ -101,7 +105,7 @@ const Signup = () => {
                                     required>
                                 </Form.Control>
                             </Form.Group>
-                            <Form.Group className="mb-3">
+                            <Form.Group className="mb-3" controlId="password2">
                                 <Form.Label>Verify Password</Form.Label>
                                 <Form.Control 
                                     type="password" 

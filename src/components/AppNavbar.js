@@ -1,5 +1,5 @@
 import { Fragment, useState, useContext } from "react";
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { Link, NavLink } from "react-router-dom";
 import UserContext from "../UserContext";
 
@@ -12,11 +12,10 @@ const AppNavbar = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     {
-                        (user.id !== null || user.isAdmin)
+                        (user.id !== null && user.isAdmin)
                         ?
                         <Nav className="me-auto">
-                            <Nav.Link as={NavLink} to="/admin/dashboard" exact>Dashboard</Nav.Link>
-                            <Nav.Link as={NavLink} to="/admin/orders" exact>All Orders</Nav.Link>
+                            <Nav.Link as={NavLink} to="/admin" exact>Dashboard</Nav.Link>
                         </Nav>
                         :
                         <Nav className="me-auto">
@@ -26,9 +25,10 @@ const AppNavbar = () => {
                     {
                         ((user.id !== null) || (localStorage.getItem("token") !== null))
                         ?
-                            <Nav>
-                                <Nav.Link as={NavLink} to="/logout">Log Out</Nav.Link>
-                            </Nav>
+                            <NavDropdown title={<span className="text-primary">Account</span>} id="basic-nav-dropdown">
+                                <NavDropdown.Item as={NavLink} to="/changepassword">Change Password</NavDropdown.Item>
+                                <NavDropdown.Item as={NavLink} to="/logout">Log Out</NavDropdown.Item>
+                            </NavDropdown>
                         :
                             <Nav>
                                 <Nav.Link as={NavLink} to="/login" exact>Log In</Nav.Link>

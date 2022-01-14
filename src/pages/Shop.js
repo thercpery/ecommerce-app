@@ -9,24 +9,26 @@ const Shop = () => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        fetch("https://ancient-temple-55465.herokuapp.com/api/products")
-        .then(res => res.json())
-        .then(data => {
-            setProducts(data.map(product => {
-                return (
-                    <ProductsCards
-                        key={product._id}
-                        productProp={product}
-                    />
-                )
-            }));
-        });
+        if(!user.isAdmin){
+            fetch("https://ancient-temple-55465.herokuapp.com/api/products")
+            .then(res => res.json())
+            .then(data => {
+                setProducts(data.map(product => {
+                    return (
+                        <ProductsCards
+                            key={product._id}
+                            productProp={product}
+                        />
+                    )
+                }));
+            });
+        }
     }, []);
 
     return (
         (user.isAdmin)
         ?
-        <Redirect to="/admin/dashboard" />
+        <Redirect to="/admin" />
         :
         <Container>
             <h1 className="text-center mt-3 mb-3">Shop</h1>
