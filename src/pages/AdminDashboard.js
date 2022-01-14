@@ -143,6 +143,7 @@ const AdminDashboard = () => {
                         (product.isActive)
                         ?
                             <tr key={product._id}>
+                                <td>{product._id}</td>
                                 <td>{product.name}</td>
                                 <td>{product.description}</td>
                                 <td>&#8369; {product.price}</td>
@@ -164,6 +165,7 @@ const AdminDashboard = () => {
                             </tr>
                         :
                             <tr key={product._id}>
+                                <td>{product._id}</td>
                                 <td>{product.name}</td>
                                 <td>{product.description}</td>
                                 <td>&#8369; {product.price}</td>
@@ -205,6 +207,7 @@ const AdminDashboard = () => {
                 <Table striped bordered hover className="mt-4">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Name</th>
                             <th>Description</th>
                             <th>Price</th>
@@ -217,7 +220,7 @@ const AdminDashboard = () => {
                     </tbody>
                 </Table>
             </Container>
-            {/* MODAL (Add product) */}
+            {/* MODAL */}
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     {(mode === "add")

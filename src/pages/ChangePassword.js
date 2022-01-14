@@ -1,9 +1,12 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react';
 import { Container, Form, Button, Card } from "react-bootstrap";
 import { Link, Redirect, useHistory } from "react-router-dom";
-import Swal from "sweetalert2"
+import UserContext from "../UserContext";
+import Swal from "sweetalert2";
 
 const ChangePassword = () => {
+
+    const {user} = useContext(UserContext);
 
     const [password1, setPassword1] = useState("");
     const [password2, setPassword2] = useState("");
@@ -45,6 +48,11 @@ const ChangePassword = () => {
     }, [password1, password2]);
 
     return (
+        
+        ((user.id === null) || (localStorage.getItem("token") === null))
+        ?
+        <Redirect to="/login"/>
+        :
         <Container className="text-center mt-3">
             <div className="d-flex justify-content-center mt-5">
                 <Card className="text-center center-block cardForm">

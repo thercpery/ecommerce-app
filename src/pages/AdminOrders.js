@@ -6,6 +6,7 @@ import UserContext from '../UserContext';
 const AdminOrders = () => {
     const {user} = useContext(UserContext);
     const [orders, setOrders] = useState();
+
     useEffect(() => {
         if(user.isAdmin){
             fetch("https://ancient-temple-55465.herokuapp.com/api/orders/", {
@@ -16,9 +17,10 @@ const AdminOrders = () => {
             .then(res => res.json())
             .then(data => {
                 setOrders(data.map(order => {
+                    let orderDate = new Date(order.purchasedOn).toLocaleDateString();
                     return(
                         <Card key={order._id}>
-                            <Card.Header>Order number {order._id}</Card.Header>
+                            <Card.Header>Order number: {order._id} | Purchased by: {order.orderedBy.email} | Purchased on: {orderDate}</Card.Header>
                             <Card.Body>
                                 <p>Items:</p>
                                 <ul>
@@ -37,10 +39,14 @@ const AdminOrders = () => {
         }
     }, [user, orders]);
     return (
-        <Container className="text-center">
-            <h1 className="mt-3">All User Orders</h1>
-            {orders}
-        </Container>
+        (user.isAdmin)
+        ?
+            <Container className="text-center">
+                <h1 className="mt-3">All User Orders</h1>
+                {orders}
+            </Container>
+        :
+        <Redirect to="/"/>
     )
 }
 

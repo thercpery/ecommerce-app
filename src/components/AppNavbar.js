@@ -20,12 +20,22 @@ const AppNavbar = () => {
                         :
                         <Nav className="me-auto">
                             <Nav.Link as={NavLink} to="/shop" exact>Shop</Nav.Link>
+                            {
+                                (user.id !== null && !user.isAdmin)
+                                ?
+                                <>
+                                    <Nav.Link as={NavLink} to="/cart" exact>Cart</Nav.Link>
+                                    <Nav.Link as={NavLink} to="/myorders" exact>My Orders</Nav.Link>
+                                </>
+                                :
+                                <></>
+                            }
                         </Nav>
                     }
                     {
                         ((user.id !== null) || (localStorage.getItem("token") !== null))
                         ?
-                            <NavDropdown title={<span className="text-primary">Account</span>} id="basic-nav-dropdown">
+                            <NavDropdown title={user.email} id="basic-nav-dropdown">
                                 <NavDropdown.Item as={NavLink} to="/changepassword">Change Password</NavDropdown.Item>
                                 <NavDropdown.Item as={NavLink} to="/logout">Log Out</NavDropdown.Item>
                             </NavDropdown>

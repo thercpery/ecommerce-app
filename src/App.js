@@ -10,9 +10,11 @@ import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 import Signup from "./pages/Signup";
 import ChangePassword from "./pages/ChangePassword";
+import Shop from "./pages/Shop";
+import Cart from "./pages/Cart";
+import UserOrders from "./pages/UserOrders";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminOrders from "./pages/AdminOrders";
-import Shop from "./pages/Shop";
 import Error from "./pages/Error";
 // UserProvider
 import { UserProvider } from "./UserContext";
@@ -22,7 +24,8 @@ import './App.css';
 function App() {
   const [user, setUser] = useState({
     id: null,
-    isAdmin: null
+    isAdmin: null,
+    email: null
   });
 
   const unsetUser = () => localStorage.clear();
@@ -38,7 +41,8 @@ function App() {
       .then(data => {
           setUser({
               id: data._id,
-              isAdmin: data.isAdmin
+              isAdmin: data.isAdmin,
+              email: data.email
           });
       });
     }
@@ -56,6 +60,8 @@ function App() {
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/changepassword" component={ChangePassword} />
           <Route exact path="/shop" component={Shop} />
+          <Route exact path="/cart" component={Cart} />
+          <Route exact path="/myorders" component={UserOrders} />
           <Route exact path="/admin" component={AdminDashboard} />
           <Route exact path="/admin/orders" component={AdminOrders} />
           <Route exact path="/product/:productId" component={Product} />

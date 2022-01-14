@@ -61,7 +61,8 @@ const Login = () => {
         .then(data => {
             setUser({
                 id:data._id,
-                isAdmin:data.isAdmin
+                isAdmin:data.isAdmin,
+                email: email
             });
         });
     }
