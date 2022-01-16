@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext, Fragment } from 'react';
 import { Container, Card, Button, Row, Col, Form } from "react-bootstrap";
-import { useParams, useHistory, Link } from "react-router-dom";
+import { useParams, useHistory, Link, Redirect } from "react-router-dom";
 import Swal from "sweetalert2";
 import UserContext from "../UserContext";
 
@@ -15,10 +15,11 @@ const Product = () => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
+    const [isActive, setIsActive] = useState();
 
     const increment = () => setQuantity(quantity++);
     const decrement = () => {
-        if(quantity < 1){
+        if(quantity > 1){
             setQuantity(quantity--);
         }
         else{
@@ -26,6 +27,50 @@ const Product = () => {
         }
     };
 
+    function addToCart(){
+        fetch("https://ancient-temple-55465.herokuapp.com/api/users/addToCart", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            },
+            body: JSON.stringify({
+                productId: productId,
+                quantity: quantity
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            Swal.fire({
+                title: "Item Added To Cart!",
+                icon: "success",
+                text: "The item is added to your cart."
+            });
+        });
+    }
+
+    function buyNow(){
+        fetch("https://ancient-temple-55465.herokuapp.com/api/orders/buynow", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            },
+            body: JSON.stringify({
+                productId: productId,
+                quantity: quantity,
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            Swal.fire({
+                title: "Order Successful!",
+                icon: "success",
+                text: "You can now see your order."
+            });
+            history.push("/myorders");
+        });
+    }
 
     useEffect(() => {
         fetch(`https://ancient-temple-55465.herokuapp.com/api/products/${productId}`)
@@ -34,13 +79,19 @@ const Product = () => {
             setName(data.name);
             setDescription(data.description);
             setPrice(data.price);
+            setIsActive(data.isActive);
         });
     }, [productId]);
 
     return (
+        (!user.isAdmin)
+        ?
         <Container className="mt-5">
             <Row>
-                <Col lg={{ span:6, offset:3 }}>
+                <Col md={6}>
+                    <img src="https://place-puppy.com/300x300" alt="Placeholder image" />
+                </Col>
+                <Col md={6}>
                     <Card>
                         <Card.Body className="text-center">
                             <Card.Title>
@@ -67,26 +118,34 @@ const Product = () => {
                             <Card.Subtitle>Price:</Card.Subtitle>
                             <Card.Text>&#8369; {price * quantity}</Card.Text>
                             {
-                                ((user.id !== null) || (localStorage.getItem("token") !== null))
+                                (isActive)
                                 ?
-                                <Fragment>
-                                    <Row>
-                                        <Col>
-                                            <Button className="cartBtn">Add to Cart</Button>
-                                        </Col>
-                                        <Col>
-                                            <Button className="cartBtn">Buy Now</Button>
-                                        </Col>
-                                    </Row>
-                                </Fragment>
+                                    ((user.id !== null) || (localStorage.getItem("token") !== null))
+                                    ?
+                                    <Fragment>
+                                        <Row>
+                                            <Col>
+                                                <Button className="cartBtn" onClick={addToCart}>Add to Cart</Button>
+                                            </Col>
+                                            <Col>
+                                                <Button className="cartBtn" onClick={buyNow}>Buy Now</Button>
+                                            </Col>
+                                        </Row>
+                                    </Fragment>
+                                    :
+                                    <Button variant="danger" as={Link} to="/login">Log In to Order</Button>
                                 :
-                                <Button variant="danger" as={Link} to="/login">Log In to Order</Button>
+                                    <Fragment>
+                                        <p>This item is out of stock.</p>
+                                    </Fragment>
                             }
                         </Card.Body>
                     </Card>
                 </Col>
             </Row>
         </Container>
+        :
+        <Redirect to="/admin"/>
     )
 }
 

@@ -5,6 +5,8 @@ import UserContext from "../UserContext";
 
 const MyOrders = () => {
 
+    const {user} = useContext(UserContext);
+
     const [orders, setOrders] = useState();
     useEffect(() => {
         fetch("https://ancient-temple-55465.herokuapp.com/api/orders/myorders",{
@@ -25,13 +27,13 @@ const MyOrders = () => {
                                 {
                                     order.products.map(product => {
                                         return(
-                                            <li key={product._id}>{product.name} - &#8369; {product.price}</li>
+                                            <li key={product._id}>{product.name} - &#8369; {product.price} - {product.quantity} units</li>
                                         )
                                     })
                                 }
                             </ul>
                         </td>
-                        <td>{order.totalAmount}</td>
+                        <td>&#8369; {order.totalAmount}</td>
                         <td>{orderDate}</td>
                     </tr>
                 )
@@ -40,22 +42,30 @@ const MyOrders = () => {
     }, [orders])
     
     return (
-        <Container className="text-center">
-            <h1 className="mt-3">My Orders</h1>
-            <Table striped bordered hover className="mt-4">
-                <thead>
-                    <tr>
-                        <th>Order Number</th>
-                        <th>Item(s) - Price</th>
-                        <th>Total Amount (&#8369;)</th>
-                        <th>Purchased On</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {orders}
-                </tbody>
-            </Table>
-        </Container>
+        ((user.id !== null) || (localStorage.getItem("token") !== null))
+        ?
+            (!user.isAdmin)
+            ?
+            <Container className="text-center">
+                <h1 className="mt-3">My Orders</h1>
+                <Table striped bordered hover className="mt-4">
+                    <thead>
+                        <tr>
+                            <th>Order Number</th>
+                            <th>Item(s) - Price - Quantity</th>
+                            <th>Total Amount</th>
+                            <th>Purchased On</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {orders}
+                    </tbody>
+                </Table>
+            </Container>
+            :
+            <Redirect to="/admin"/>
+        :
+        <Redirect to="/login" />
     )
 }
 

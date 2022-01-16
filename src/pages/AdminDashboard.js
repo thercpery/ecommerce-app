@@ -192,116 +192,119 @@ const AdminDashboard = () => {
     
 
     return (
-        (user.isAdmin)
+        ((user.id !== null) || (localStorage.getItem("token") !== null))
         ?
-        <>
-            <Container className="text-center">
-                <h1 className="mt-3">Dashboard</h1>
-                <Button 
-                    onClick={() => {
-                        handleShow();
-                        setMode("add");
-                        }
-                    }>Sell New Product</Button>
-                <Button as={Link} to="/admin/orders" className="btn-success ml-3">View All User Orders</Button>
-                <Table striped bordered hover className="mt-4">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                            <th>Available?</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {products}
-                    </tbody>
-                </Table>
-            </Container>
-            {/* MODAL */}
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    {(mode === "add")
-                    ?
-                    <Modal.Title>Sell New Product</Modal.Title>
-                    :
-                    <Modal.Title>Update Product</Modal.Title>
-                    }
-                </Modal.Header>
-                <Form onSubmit={(e) => {
-                    if(mode==="add"){
-                        sellProduct(e);
-                    }
-                    else{
-                        updateProduct(e);
-                    }
-                }}>
-                    <Modal.Body>
-                        {
-                            (mode==="update")
-                            ?
-                            <Form.Control 
-                                type="text"
-                                value={id}
-                                onChange={e => setId(e.target.value)}
-                                hidden
-                            />
-                            :
-                            <></>
-                        }
-                        <Form.Group className="mb-3" controlId="productName">
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control 
-                                type="text" 
-                                placeholder="e.g. Apple MacBook"
-                                value={name}
-                                onChange={e => setName(e.target.value)}
-                                required
-                            />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3" controlId="productDescription">
-                            <Form.Label>Description</Form.Label>
-                            <Form.Control 
-                                as="textarea" 
-                                placeholder="e.g. This is a sturdy item."
-                                value={description}
-                                onChange={e => setDescription(e.target.value)}
-                                required
-                            />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3" controlId="productPrice">
-                            <Form.Label>Price (&#8369;)</Form.Label>
-                            <Form.Control 
-                                type="number" 
-                                placeholder="e.g. &#8369; 100,000.00"
-                                value={price}
-                                onChange={e => setPrice(e.target.value)}
-                                required
-                            />
-                        </Form.Group>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="danger" onClick={handleClose}>Close</Button>
-                        <Button type="submit" className="submitBtn">
-                            {
-                                (mode==="add")
-                                ?
-                                "Sell New Product"
-                                :
-                                "Update Product"
+            (user.isAdmin)
+            ?
+            <>
+                <Container className="text-center">
+                    <h1 className="mt-3">Dashboard</h1>
+                    <Button 
+                        onClick={() => {
+                            handleShow();
+                            setMode("add");
                             }
+                        }>Sell New Product</Button>
+                    <Table striped bordered hover className="mt-4">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Available?</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {products}
+                        </tbody>
+                    </Table>
+                </Container>
+                {/* MODAL */}
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        {(mode === "add")
+                        ?
+                        <Modal.Title>Sell New Product</Modal.Title>
+                        :
+                        <Modal.Title>Update Product</Modal.Title>
+                        }
+                    </Modal.Header>
+                    <Form onSubmit={(e) => {
+                        if(mode==="add"){
+                            sellProduct(e);
+                        }
+                        else{
+                            updateProduct(e);
+                        }
+                    }}>
+                        <Modal.Body>
+                            {
+                                (mode==="update")
+                                ?
+                                <Form.Control 
+                                    type="text"
+                                    value={id}
+                                    onChange={e => setId(e.target.value)}
+                                    hidden
+                                />
+                                :
+                                <></>
+                            }
+                            <Form.Group className="mb-3" controlId="productName">
+                                <Form.Label>Name</Form.Label>
+                                <Form.Control 
+                                    type="text" 
+                                    placeholder="e.g. Apple MacBook"
+                                    value={name}
+                                    onChange={e => setName(e.target.value)}
+                                    required
+                                />
+                            </Form.Group>
 
-                            </Button>
-                    </Modal.Footer>
-                </Form>
-            </Modal>
-        </>
+                            <Form.Group className="mb-3" controlId="productDescription">
+                                <Form.Label>Description</Form.Label>
+                                <Form.Control 
+                                    as="textarea" 
+                                    placeholder="e.g. This is a sturdy item."
+                                    value={description}
+                                    onChange={e => setDescription(e.target.value)}
+                                    required
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="productPrice">
+                                <Form.Label>Price (&#8369;)</Form.Label>
+                                <Form.Control 
+                                    type="number" 
+                                    placeholder="e.g. &#8369; 100,000.00"
+                                    value={price}
+                                    onChange={e => setPrice(e.target.value)}
+                                    required
+                                />
+                            </Form.Group>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="danger" onClick={handleClose}>Close</Button>
+                            <Button type="submit" className="submitBtn">
+                                {
+                                    (mode==="add")
+                                    ?
+                                    "Sell New Product"
+                                    :
+                                    "Update Product"
+                                }
+
+                                </Button>
+                        </Modal.Footer>
+                    </Form>
+                </Modal>
+            </>
+            :
+            <Redirect to="/shop"/>
         :
-        <Redirect to="/shop"/>
+        <Redirect to="/login"/>
     )
 }
 
