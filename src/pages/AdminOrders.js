@@ -44,7 +44,7 @@ const AdminOrders = () => {
     return (
         ((user.id !== null) || (localStorage.getItem("token") !== null))
         ?
-            (user.isAdmin === true)
+            (user.isAdmin)
             ?
             <Container className="text-center">
                 <h1 className="mt-3">All User Orders</h1>
