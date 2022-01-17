@@ -27,7 +27,7 @@ const MyOrders = () => {
                                 {
                                     order.products.map(product => {
                                         return(
-                                            <li key={product._id}><Link to={`/product/${product._id}`}>{product.name}</Link> - &#8369; {product.price} - {product.quantity} units</li>
+                                            <li key={product._id}><Link to={`/product/${product.productId}`}>{product.name}</Link> - &#8369; {product.price} - {product.quantity} units</li>
                                         )
                                     })
                                 }
