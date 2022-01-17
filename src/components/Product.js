@@ -101,7 +101,13 @@ const Product = () => {
                             <Card.Subtitle>Quantity:</Card.Subtitle>
                             <Row className="mt-2 mb-2">
                                 <Col>
+                                {
+                                    (quantity > 1)
+                                    ?
                                     <Button className="btn-block" onClick={decrement}>-</Button>
+                                    :
+                                    <Button className="btn-block" disabled={true}>-</Button>
+                                }
                                 </Col>
                                 <Col>
                                     <Form.Control 

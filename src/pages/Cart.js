@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react'
 import { Container, Button, Table, Form, Row, Col } from "react-bootstrap";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory, Redirect, Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import UserContext from "../UserContext";
 
@@ -82,7 +82,7 @@ const Cart = () => {
             setCartItems(data.products.map(product => {
                 return(
                     <tr key={product.productId}>
-                        <td>{product.name}</td>
+                        <td><Link to={`/product/${product.productId}`}>{product.name}</Link></td>
                         <td>&#8369; {product.price}</td>
                         <td>
                             <Row>

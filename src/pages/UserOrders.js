@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { Container, Table } from "react-bootstrap";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import UserContext from "../UserContext";
 
 const MyOrders = () => {
@@ -27,7 +27,7 @@ const MyOrders = () => {
                                 {
                                     order.products.map(product => {
                                         return(
-                                            <li key={product._id}>{product.name} - &#8369; {product.price} - {product.quantity} units</li>
+                                            <li key={product._id}><Link to={`/product/${product._id}`}>{product.name}</Link> - &#8369; {product.price} - {product.quantity} units</li>
                                         )
                                     })
                                 }
