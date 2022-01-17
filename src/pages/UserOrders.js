@@ -63,7 +63,7 @@ const MyOrders = () => {
                 </Table>
             </Container>
             :
-            <Redirect to="/admin"/>
+            <Redirect to="/admin/orders"/>
         :
         <Redirect to="/login" />
     )
