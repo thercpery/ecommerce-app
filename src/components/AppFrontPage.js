@@ -1,47 +1,66 @@
-import { Carousel, Button } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { Carousel, Button, ListGroupItem } from "react-bootstrap";
 import { Link } from "react-router-dom"; 
+// import CarouselItems from "./CarouselItems";
 
 const AppCarouselPage = () => {
+    const carouselItems = [
+        {
+            id: 1,
+            img: {
+                src: "img/carousel-1.jpg",
+                alt: "First Slide"
+            },
+            captions: {
+                title: "NO BUDGET FOR COMPUTERS?",
+                text: "Shop now here for reasonable prices."
+            }
+        },
+        {
+            id: 2,
+            img: {
+                src: "img/carousel-2.jpg",
+                alt: "Second Slide"
+            },
+            captions: {
+                title: "NO BUDGET FOR GADGETS?",
+                text: "Shop now here for reasonable prices."
+            }
+        },
+        {
+            id: 3,
+            img: {
+                src: "img/carousel-3.jpg",
+                alt: "Third Slide"
+            },
+            captions: {
+                title: "GUARANTEE?",
+                text: "Don't worry, we have warranty here."
+            }
+        }
+    ];
+
     return (
         <Carousel>
-            <Carousel.Item className="frontPageItem">
-                <img
-                className="d-block w-100"
-                src="img/carousel-1.jpg"
-                alt="First slide"
-                />
-                <Carousel.Caption>
-                <h1 className="mb-5">NO BUDGET FOR COMPUTERS?</h1>
-                <h4 className="mb-5">Shop now here for reasonable prices.</h4>
-                <Button className="ctaBtn mb-5" as={Link} to="/shop">SHOP NOW</Button>
-                </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item className="frontPageItem">
-                <img
-                className="d-block w-100"
-                src="img/carousel-2.jpg"
-                alt="Second slide"
-                />
-
-                <Carousel.Caption>
-                <h1 className="mb-5">NO BUDGET FOR GADGETS?</h1>
-                <h4 className="mb-5">All of our second-hand items are of high-quality, just as like you have bought it brand new.</h4>
-                <Button className="ctaBtn mb-5" as={Link} to="/shop">SHOP NOW</Button>
-                </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item className="frontPageItem">
-                <img
-                className="d-block w-100"
-                src="img/carousel-3.jpg"
-                alt="Third slide"
-                />
-
-                <Carousel.Caption>
-                <h1 className="mb-5">GUARANTEE?</h1>
-                <h4 className="mb-5">Don't worry, we have warranty here.</h4>
-                <Button className="ctaBtn mb-5" as={Link} to="/shop">SHOP NOW</Button>
-                </Carousel.Caption>
-            </Carousel.Item>
+            {
+                carouselItems.map(item => {
+                    const {id, img, captions} = item;
+                    return(
+                        <Carousel.Item className="frontPageItem" key={id}>
+                            <img 
+                                className="d-block w-100"
+                                src={img.src} 
+                                alt={img.alt}
+                            />
+                            <Carousel.Caption>
+                                <h1 className="mb-5">{captions.title}</h1>
+                                <h4 className="mb-5">{captions.text}</h4>
+                                <Button className="ctaBtn mb-5" as={Link} to="/shop">SHOP NOW</Button>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                    )
+                })
+            }
         </Carousel>
     )
 }
